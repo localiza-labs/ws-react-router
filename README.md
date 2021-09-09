@@ -1,6 +1,6 @@
-# Workshop - Formulários em React
+# Workshop - Navegação em React
 
-O objetivo desse projeto é passar conteúdo sobre formulários usando React.
+O objetivo desse projeto é passar conteúdo sobre navegação usando React.
 
 ## Como usar esse repositório
 
@@ -8,6 +8,6 @@ Cada conteúdo vai ser dividido em branchs e cada branch tem seu próprio `READM
 
 Os conteúdos serão:
 
-* 1-controlled-components
-* 2-formik
-* 3-validacao-e-feedback
+* 1-primeira-rota
+* 2-nested-routes
+* 3-guards
