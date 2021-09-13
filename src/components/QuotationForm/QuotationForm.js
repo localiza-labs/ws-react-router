@@ -2,7 +2,6 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {object as schema, string} from 'yup';
 
-import FormValues from '../FormValues';
 import {InputField, TextareaField} from "../Form";
 import SelectField from "../Form/SelectField";
 import Loading from "../Loading";
@@ -14,7 +13,7 @@ const hours = [...new Array(24)].map((value, index) => `${defineLeftZero(index)}
 const sleep = (time = 1000) => new Promise((resolve) => {
     setTimeout(() => {
         resolve(false);
-    },time)
+    }, time)
 })
 
 const validationSchema = schema({
@@ -128,22 +127,19 @@ function QuotationForm() {
 
                 <div className="row">
                     <div className="col-md-12">
-                        <button
-                            className="btn btn-primary"
-                            type="submit"
-                            disabled={isSubmitting}
-                        >
-                            Enviar {!!(isSubmitting) && <span className="mx-2"><Loading/></span>}
-                        </button>
+                        <div className="d-flex flex-row justify-content-end">
+                            <button
+                                className="btn btn-primary"
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
+                                Próximo {!!(isSubmitting) && <span className="mx-2"><Loading/></span>}
+                            </button>
+                        </div>
                     </div>
                 </div>
 
             </form>
-
-            <div className="mt-3">
-                <FormValues values={formValues}/>
-            </div>
-
         </>
     );
 }

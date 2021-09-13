@@ -1,0 +1,55 @@
+[
+  {
+    "name": "ECONÔMICO",
+    "code": "A",
+    "vehicles": [
+      {
+        "name": "Fiat Uno 1.0",
+        "default": true,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/NUNS.png"
+      }
+    ]
+  },
+  {
+    "name": "ECONÔMICO",
+    "code": "B",
+    "vehicles": [
+      {
+        "name": "Renault Kwid 1.0",
+        "default": true,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/KWID.png"
+      },
+      {
+        "name": "Fiat Mobi 1.0",
+        "default": false,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/MOBI.png"
+      },
+      {
+        "name": "Fiat Uno 1.0",
+        "default": false,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/NUNB.png"
+      }
+    ]
+  },
+  {
+    "name": "ECONÔMICO COM AR",
+    "code": "C",
+    "vehicles": [
+      {
+        "name": "GM Onix 1.0",
+        "default": true,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/ONIX.png"
+      },
+      {
+        "name": "Novo Ford Ka 1.0",
+        "default": false,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/KACR.png"
+      },
+      {
+        "name": "Fiat Argo 1.0",
+        "default": false,
+        "urlImage": "https://www.localiza.com/brasil-site/geral/Frota/ARGO.png"
+      }
+    ]
+  }
+]

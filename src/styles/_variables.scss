@@ -19,7 +19,7 @@
   --shadow-card: 0px 8px 21px rgba(0, 0, 0, 0.17);
 
   --bs-primary: var(--color-primary);
-  --bs-secondary: #6c757d;
+  --bs-secondary: #EEEEEE;
   --bs-success: #198754;
   --bs-info: #0dcaf0;
   --bs-warning: #ffc107;
@@ -29,5 +29,6 @@
 }
 
 $theme-colors: (
-        "primary": #00984A
+        "primary": #00984A,
+        "secondary": #EEEEEE
 );

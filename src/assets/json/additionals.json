@@ -1,0 +1,32 @@
+[
+  {
+    "id": "PROTECAO_CARRO",
+    "label": "Proteção do carro",
+    "price": 28
+  },
+  {
+    "id": "COBERTURA_TERCEIROS",
+    "label": "Cobertura para terceiros",
+    "price": 10
+  },
+  {
+    "id": "LOCALIZA_WAY",
+    "label": "Localiza Way",
+    "price": 17
+  },
+  {
+    "id": "CADEIRA_BEBE",
+    "label": "Cadeira de bebê",
+    "price": 20
+  },
+  {
+    "id": "BEBE_CONFORTO",
+    "label": "Bebê conforto",
+    "price": 20
+  },
+  {
+    "id": "ASSENTO_ELEVACAO",
+    "label": "Assento de elevação",
+    "price": 20
+  }
+]
