@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import successCheck from '../../assets/svg/success.svg';
 import {ConfirmationCode} from "./styles";
+import {ReserveFlowContext} from "../../providers/ReserveFlowProvider";
 
-const ReserveConfirmedView = ({firstName = 'Joe', lastName = 'Doe'}) => {
+const ReserveConfirmedView = () => {
+    const {steps} = useContext(ReserveFlowContext);
+    const personStep = steps[2];
+    const {firstName, lastName} = personStep.value;
+
     return (
         <div className="alert alert-secondary">
             <div className="row">
