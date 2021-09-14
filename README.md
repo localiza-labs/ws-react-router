@@ -1,67 +1,102 @@
-# Setup
+# Navegação
 
-Como React é uma lib ele não possui necessariamente uma solução de navegação própria.
+Agora que configuramos nosso `Router` conseguimos navegar para o "página" correta de acordo com a rota, mas não queremos ter que mudar a rota direto no navegador toda vez que precisarmos ir para outra página.
 
-Para fazer a navegação entre "páginas" da sua aplicação é preciso criar sua própria solução ou usar uma biblioteca de mercado, é o que vamos fazer.
+Para isso a lib `react-router-dom` tem um componente e um `hook` que pode nos auxiliar.
 
-Vamos utilizar a lib `react-router-dom` e a primeira coisa que vamos fazer é a instalação:
+### Link
 
-```
-npm install --save react-router-dom
-```
+A título de exemplo vamos inserir alguns links no nosso `App.js`.
 
-ou
-
-```
-yarn react-router-dom
-```
-
-### Router
-
-Agora que instalamos a lib, vamos configurar nosso `Router` no component `App.js`.
-
-Importe as dependências:
+Primeiro importe a dependência:
 
 ```
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect, 
+    Link
 } from "react-router-dom";
 ```
 
-Coloque o `Router` onde faz sentido para a sua aplicação, lembrando que esse local vai ser a raiz da navegação do app.
-
-No nosso caso vamos colocar abaixo do `Header`, pois nessa aplicação de exemplo o header faz parte d etodas as rotas:
+E dentro do nosso `Router` vamos criar alguns links para navegar entre a Home e o Fluxo de Reservas:
 
 ```
-function App() {
+...
+    <Router>
+    
+        <ul className="nav mb-3">
+            <li className="nav-item me-3">
+                <Link to="/home">Home</Link>
+            </li>
+            <li className="nav-item">
+                <Link to="/fluxo-reserva/A">Reservas grupo A</Link>
+            </li>
+        </ul>
+...
+```
+
+Agora que temos os componentes `Link`, basta clicar em qualquer um deles que eles redirecionam para a rota correta.
+
+### useHistory
+
+Nós também podemos navegar usando o hook `useHistory` e vamos fazer isso no grid de grupo de carros.
+
+Toda vez que o usuário clicar no botão `Reserve agora` ele será direcionado para o fluxo de reserva correspondente ao grupo que ele selecionou.
+
+No componente `CarGroupsView` vamos importar nosso hook:
+
+```
+import { useHistory } from 'react-router-dom';
+```
+
+Agora é só atualizar o componente para disparar o método `push` do nosso `history`:
+
+```
+function CarGroupsView(){
+    const history = useHistory();
+
+    const reserve = (carGroupCode) => {
+        history.push(`/fluxo-reserva/${carGroupCode}`);
+    }
+
     return (
-        <div>
-            <Header/>
-
-            <div className="container pt-5 pb-5">
-
-                <Router>
-
-                    <Switch>
-
-                        <Route path="/home">
-                            <CarGroupsView/>
-                        </Route>
-
-                        <Route path="/fluxo-reserva/:carGroupCode">
-                            <ReserveFlowView/>
-                        </Route>
-
-                        <Redirect to="home"/>
-
-                    </Switch>
-
-                </Router>
-
-            </div>
-        </div>
+        <CarGroupsGrid
+            carGroups={carGroups}
+            onReserve={reserve}
+        />
     );
 }
 ```
+
+### Extraindo dados da rota
+
+Essa rota de fluxo de reserva é dinâmica e muda conforme o grupo de carros escolhido.
+
+Numa aplicação real provavelmente você usaria a essa informação do grupo de carros que está na rota.
+
+Para isso podemos usar o hook `useParams`:
+
+```
+import {useParams} from "react-router-dom";
+```
+
+Em seguida configuramos um cabeçalho com a informação do grupo selecionado:
+
+```
+const ReserveFlowView = () => {
+    const {carGroupCode} = useParams();
+
+    return (
+        <ReserveFlowProvider>
+            <h1>Reserva do grupo {carGroupCode}</h1>
+            <ReserveConfirmedView/>
+        </ReserveFlowProvider>
+    );
+};
+```
+
+
+
+

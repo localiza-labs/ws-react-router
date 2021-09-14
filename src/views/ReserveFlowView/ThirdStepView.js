@@ -17,7 +17,7 @@ const ThirdStepView = () => {
     return (
         <>
 
-            <h1>Dados pessoais</h1>
+            <h2>Dados pessoais</h2>
 
             <PersonForm
                 value={currentStep.value}

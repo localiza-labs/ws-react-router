@@ -16,7 +16,7 @@ const FirstStepView = () => {
 
     return (
         <>
-            <h1>Dados da reserva</h1>
+            <h2>Dados da reserva</h2>
             <QuotationForm
                 value={currentStep.value}
                 onSubmit={onSubmit}

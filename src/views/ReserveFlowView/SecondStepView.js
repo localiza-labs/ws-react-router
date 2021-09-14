@@ -13,7 +13,7 @@ const SecondStepView = () => {
 
     return (
         <>
-            <h1>Adicionais</h1>
+            <h2>Adicionais</h2>
 
             <div className="row">
                 <div className="col-md-12 mb-3">
