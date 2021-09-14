@@ -1,3 +1,4 @@
+import React, {Suspense, lazy} from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,8 +8,9 @@ import {
 } from "react-router-dom";
 
 import Header from "./components/Header";
-import CarGroupsView from "./views/CarGroupsView";
-import ReserveFlowView from "./views/ReserveFlowView/ReserveFlowView";
+
+const CarGroupsView = lazy(() => import('./views/CarGroupsView'));
+const ReserveFlowView = lazy(() => import('./views/ReserveFlowView/ReserveFlowView'));
 
 function App() {
     return (
@@ -18,7 +20,6 @@ function App() {
             <div className="container pt-5 pb-5">
 
                 <Router>
-
                     <ul className="nav mb-3">
                         <li className="nav-item me-3">
                             <Link to="/home">Home</Link>
@@ -28,19 +29,25 @@ function App() {
                         </li>
                     </ul>
 
-                    <Switch>
+                    <Suspense
+                        fallback={<div>Loading...</div>}
+                    >
 
-                        <Route path="/home">
-                            <CarGroupsView/>
-                        </Route>
+                        <Switch>
 
-                        <Route path="/fluxo-reserva/:carGroupCode">
-                            <ReserveFlowView/>
-                        </Route>
+                            <Route path="/home">
+                                <CarGroupsView/>
+                            </Route>
 
-                        <Redirect to="home"/>
+                            <Route path="/fluxo-reserva/:carGroupCode">
+                                <ReserveFlowView/>
+                            </Route>
 
-                    </Switch>
+                            <Redirect to="home"/>
+
+                        </Switch>
+
+                    </Suspense>
 
                 </Router>
 
