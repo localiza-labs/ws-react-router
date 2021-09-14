@@ -2,7 +2,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect
+    Redirect,
+    Link
 } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -17,6 +18,15 @@ function App() {
             <div className="container pt-5 pb-5">
 
                 <Router>
+
+                    <ul className="nav mb-3">
+                        <li className="nav-item me-3">
+                            <Link to="/home">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/fluxo-reserva/A">Reservas grupo A</Link>
+                        </li>
+                    </ul>
 
                     <Switch>
 
