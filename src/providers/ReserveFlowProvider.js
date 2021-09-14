@@ -47,7 +47,7 @@ const ReserveFlowProvider = ({children}) => {
         setSteps((steps) => {
             const step = steps.find(s => s.name === stepName);
 
-            if (step) {
+            if (step && step.value !== values) {
                 step.value = {...values};
 
                 return [...steps];
@@ -61,7 +61,7 @@ const ReserveFlowProvider = ({children}) => {
         setSteps((steps) => {
             const step = steps.find(s => s.name === stepName);
 
-            if (step) {
+            if (step && step.valid !== valid) {
                 step.valid = valid;
 
                 return [...steps];

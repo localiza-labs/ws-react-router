@@ -24,6 +24,7 @@ const AdditionalGrid = ({additionals = [], selected: initialSelection, onSelect 
                         <AdditionalCard
                             key={additional.id}
                             {...additional}
+                            selected={selected.includes(additional.id)}
                             onSelect={select}
                         />
                     )
