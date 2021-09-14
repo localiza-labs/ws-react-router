@@ -1,103 +1,46 @@
-# Guards
+# Lazy Loading (Code-Splitting)
 
-Em frameworks como `Angular` e `Vue` o próprio router tem solução para prevenir acesso a rotas, caso não sejam atendidas as devidas condições.
+Como estamos falando de um `SPA`, dependendo do tamanho da sua aplicação talvez fosse interessante carregar apenas o que é necessário para o usuário, diminuindo assim o tamanho e tempo de carregamento do `bundle` principal.
 
-No caso do `React`, especificamente utilizando o `react-router-dom`, você pode criar um seu próprio componente `Route` para realizar essa função.
+Para isso o react tem uma API de alto nível que se chama `lazy` e através dela conseguimos fazer o `dynamic import` dos nossos componentes.
 
-É bem simples. Primeiro crie o componente `src/views/ReserveFlowView/FlowRoute.js`:
+Vamos aplicar essa técnica no nosso `App.js`.
 
-```
-import {useContext} from "react";
-import {Redirect, Route} from "react-router-dom";
-import {ReserveFlowContext} from "../../providers/ReserveFlowProvider";
-
-function FlowRoute({ children, ...rest }) {
-    const {steps} = useContext(ReserveFlowContext);
-    const firstStep = steps[0];
-
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                firstStep.valid ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: firstStep.path,
-                            state: { from: location }
-                        }}
-                    />
-                )
-            }
-        />
-    );
-}
-
-export default FlowRoute;
-```
-
-Agora é só substituir o componente `Route` pelo `FlowRoute`, onde for necessário:
+Primeiro importaremos o `lazy` e o `Suspense`:
 
 ```
-import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useParams,
-    useRouteMatch, Redirect
-} from "react-router-dom";
-
-import FirstStepView from "./FirstStepView";
-import SecondStepView from "./SecondStepView";
-import ThirdStepView from "./ThirdStepView";
-import ReserveConfirmedView from "./ReserveConfirmedView";
-import ReserveFlowProvider from "../../providers/ReserveFlowProvider";
-import FlowRoute from "./FlowRoute";
-
-const ReserveFlowView = () => {
-    const {carGroupCode} = useParams();
-    const { url } = useRouteMatch();
-
-    return (
-        <ReserveFlowProvider>
-            <h1>Reserva do grupo {carGroupCode}</h1>
-
-            <Router basename={url}>
-                <Switch>
-
-                    <Route exact path={`/dados-reserva`}>
-                        <FirstStepView/>
-                    </Route>
-
-                    <FlowRoute exact path={`/adicionais`}>
-                        <SecondStepView/>
-                    </FlowRoute>
-
-                    <FlowRoute exact path={`/dados-pessoais`}>
-                        <ThirdStepView/>
-                    </FlowRoute>
-
-                    <FlowRoute exact path={`/confirmacao`}>
-                        <ReserveConfirmedView/>
-                    </FlowRoute>
-
-                    <Redirect to={`/dados-reserva`}/>
-
-                </Switch>
-            </Router>
-
-
-        </ReserveFlowProvider>
-    );
-};
-
-export default ReserveFlowView;
+import React, {Suspense, lazy} from "react";
 ```
 
+E em seguida atualizaremos o modo como importamos nossos componentes:
 
+```
+const CarGroupsView = lazy(() => import('./views/CarGroupsView'));
+const ReserveFlowView = lazy(() => import('./views/ReserveFlowView/ReserveFlowView'));
+```
 
+Agora basta "envolver" nosso `Switch` com o `Suspense` e pronto, lazy loading praticamente de graça.
 
+```
+<Suspense
+    fallback={<div>Loading...</div>}
+>
 
+    <Switch>
 
+        <Route path="/home">
+            <CarGroupsView/>
+        </Route>
+
+        <Route path="/fluxo-reserva/:carGroupCode">
+            <ReserveFlowView/>
+        </Route>
+
+        <Redirect to="home"/>
+
+    </Switch>
+
+</Suspense>
+```
+
+Agora o código dos componentes das rotas apenas é carregado quando necessário.
