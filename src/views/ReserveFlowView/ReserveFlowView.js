@@ -12,7 +12,6 @@ import SecondStepView from "./SecondStepView";
 import ThirdStepView from "./ThirdStepView";
 import ReserveConfirmedView from "./ReserveConfirmedView";
 import ReserveFlowProvider from "../../providers/ReserveFlowProvider";
-import FlowRoute from "./FlowRoute";
 
 const ReserveFlowView = () => {
     const {carGroupCode} = useParams();
@@ -29,17 +28,17 @@ const ReserveFlowView = () => {
                         <FirstStepView/>
                     </Route>
 
-                    <FlowRoute exact path={`/adicionais`}>
+                    <Route exact path={`/adicionais`}>
                         <SecondStepView/>
-                    </FlowRoute>
+                    </Route>
 
-                    <FlowRoute exact path={`/dados-pessoais`}>
+                    <Route exact path={`/dados-pessoais`}>
                         <ThirdStepView/>
-                    </FlowRoute>
+                    </Route>
 
-                    <FlowRoute exact path={`/confirmacao`}>
+                    <Route exact path={`/confirmacao`}>
                         <ReserveConfirmedView/>
-                    </FlowRoute>
+                    </Route>
 
                     <Redirect to={`/dados-reserva`}/>
 
