@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {object as schema, string} from "yup";
 import {useFormik} from "formik";
 import {InputField} from "../Form";
@@ -13,29 +13,39 @@ const validationSchema = schema({
         .required('É preciso preencher o email'),
 });
 
-const PersonForm = ({
-                        children, onSubmit = () => {
+const PersonForm = (
+    {
+        children,
+        value: initialValues = {
+            firstName: '',
+            lastName: '',
+            email: '',
+        },
+        onValidChange = () => {
+        },
+        onSubmit = () => {
+        }
     }
-                    }) => {
+) => {
     const {
         values,
         handleChange,
         handleBlur,
         touched,
         errors,
-        handleSubmit
+        handleSubmit,
+        isValid
     } = useFormik({
-        initialValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-        },
+        initialValues,
         validationSchema,
         onSubmit: (values) => {
-            console.log(values);
             onSubmit(values);
         }
     });
+
+    useEffect(() => {
+        onValidChange(isValid);
+    }, [isValid, onValidChange]);
 
     return (
         <form onSubmit={handleSubmit}>

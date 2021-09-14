@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useFormik} from 'formik';
 import {object as schema, string} from 'yup';
 
@@ -10,12 +10,6 @@ const defineLeftZero = (number) => number < 10 ? '0' : '';
 
 const hours = [...new Array(24)].map((value, index) => `${defineLeftZero(index)}${index}:00`);
 
-const sleep = (time = 1000) => new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(false);
-    }, time)
-})
-
 const validationSchema = schema({
     pickUpAgency: string()
         .required('É preciso preencher o local de retirada'),
@@ -26,7 +20,20 @@ const validationSchema = schema({
         .required('É preciso preencher a hora de retirada'),
 });
 
-function QuotationForm() {
+function QuotationForm(
+    {
+        value: initialValues = {
+            pickUpAgency: '',
+            pickUpDate: '',
+            pickUpHour: '',
+            specialRequest: ''
+        },
+        onValidChange = () => {
+        },
+        onSubmit = () => {
+        }
+    }
+) {
     const {
         values: formValues,
         handleChange: handleFieldChange,
@@ -34,20 +41,19 @@ function QuotationForm() {
         touched,
         errors,
         handleSubmit,
-        isSubmitting
+        isSubmitting,
+        isValid
     } = useFormik({
-        initialValues: {
-            pickUpAgency: '',
-            pickUpDate: '',
-            pickUpHour: '',
-            specialRequest: ''
-        },
+        initialValues,
         validationSchema,
-        onSubmit: async (values) => {
-            await sleep();
-            console.log(values);
+        onSubmit: (values) => {
+            onSubmit(values);
         }
     });
+
+    useEffect(() => {
+        onValidChange(isValid);
+    }, [isValid, onValidChange]);
 
     return (
         <>

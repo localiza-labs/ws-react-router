@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AdditionalGrid from "../../components/Additional/AdditionalGrid";
 import additionals from '../../assets/json/additionals.json';
+import {ReserveFlowContext} from "../../providers/ReserveFlowProvider";
 
 const SecondStepView = () => {
+    const {steps, updateStepValues} = useContext(ReserveFlowContext);
+    const currentStep = steps[1];
+
+    const onSelect = (values) => {
+        updateStepValues(currentStep.name, {additionals: values});
+    }
+
     return (
         <>
             <h1>Adicionais</h1>
@@ -11,6 +19,7 @@ const SecondStepView = () => {
                 <div className="col-md-12 mb-3">
                     <AdditionalGrid
                         additionals={additionals}
+                        onSelect={onSelect}
                     />
                 </div>
             </div>
